@@ -1,0 +1,10 @@
+.container {
+  display: grid;
+  grid-template-rows: 8rem min-content 1fr;
+
+  grid-template-columns:
+    [full-start] minmax(6rem, 1fr)
+    [center-start] repeat(8, [col-start] minmax(min-content, 18.5rem) [col-end])
+    [center-end]
+    minmax(6rem, 1fr) [full-end];
+}

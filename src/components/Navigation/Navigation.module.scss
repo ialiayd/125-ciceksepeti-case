@@ -1,0 +1,33 @@
+@import "../../sass/variables";
+
+.navigation {
+  grid-row: 1 / 2;
+  grid-column: 1 / -1;
+
+  display: grid;
+  grid-template-columns:
+    [full-start] minmax(6rem, 1fr)
+    [center-start] repeat(8, [col-start] minmax(min-content, 18.5rem) [col-end])
+    [center-end]
+    minmax(6rem, 1fr) [full-end];
+
+  background-color: $color-white;
+
+  &__inner {
+    grid-column: center-start / center-end;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__logoBox {
+    width: 13rem;
+    height: auto;
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+}
