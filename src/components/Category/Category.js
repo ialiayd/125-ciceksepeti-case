@@ -24,7 +24,10 @@ function Category({ category }) {
 
     return (
         <li className={`${css.category__listItem} ${toggle && css.category__listItem_active}`}>
-            <Link href="#">
+            <Link href={{
+                pathname: '/',
+                query: { kategori: category.id },
+            }}>
                 <a className={css.category__link} onClick={handleClick}>{toCapitalize(category.title)}</a>
             </Link>
         </li>
