@@ -1,14 +1,18 @@
+import { useEffect } from 'react'
 import Head from 'next/head'
 import CategoryList from '../src/components/CategoryList/CategoryList'
 import Header from '../src/components/Header/Header'
 import Main from '../src/components/MainHOC/Main'
 import { useRouter } from 'next/router'
 
-export default function Home({ category = "/" }) {
+export default function Home() {
 
-  // const router = useRouter();
-  // const { category } = router.query;
-  console.log(category);
+  const router = useRouter();
+  const { kategori } = router.query;
+
+  useEffect(() => {
+    console.log(kategori);
+  }, [kategori])
 
   return (
     <>
@@ -26,3 +30,4 @@ export default function Home({ category = "/" }) {
 }
 
 //TODO: Categoriler ve Ürünler serverside Props ile çekilecek
+//TODO: Router ile gelen parametreye göre ürün listesi yükle ve kategori border ı stille
