@@ -1,17 +1,23 @@
 import { useEffect } from 'react'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
+
+//COMPONENTS
 import CategoryList from '../src/components/CategoryList/CategoryList'
 import Header from '../src/components/Header/Header'
 import Main from '../src/components/MainHOC/Main'
-import { useRouter } from 'next/router'
+import ProductList from '../src/components/ProductList/ProductList'
+//COMPONENTS
 
-export default function Home() {
+import apiEndpoints from '../src/constants/apiEndpoints'
+
+
+export default function Home({ products, categories }) {
 
   const router = useRouter();
   const { kategori } = router.query;
 
   useEffect(() => {
-    console.log(kategori);
   }, [kategori])
 
   return (
@@ -23,11 +29,25 @@ export default function Home() {
       </Head>
       <Header />
       <Main>
-        <CategoryList categories={[]} />
+        <CategoryList categories={categories} />
+        <ProductList products={products} />
       </Main>
     </>
   )
 }
 
-//TODO: Categoriler ve Ürünler serverside Props ile çekilecek
+//DONE: Categoriler ve Ürünler serverside Props ile çekilecek
 //TODO: Router ile gelen parametreye göre ürün listesi yükle ve kategori border ı stille
+export async function getServerSideProps(context) {
+
+  const products = await fetch(apiEndpoints.product.allProducts);
+  const categories = await fetch(apiEndpoints.category.allCategories);
+
+
+  return {
+    props: {
+      products: await products.json(),
+      categories: await categories.json()
+    }, // will be passed to the page component as props
+  }
+}

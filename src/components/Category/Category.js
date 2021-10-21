@@ -4,26 +4,26 @@ import css from "./Category.module.scss"
 import { toCapitalize } from "../../utilities/stringOperations"
 import { useRouter } from 'next/router'
 
-function Category({ category }) {
+function Category({ category, isActive, setTab }) {
 
-    const [toggle, setToggle] = useState(false);
 
     const router = useRouter();
 
+    const ref = useRef();
+
     const appendQuery = (cat) => {
-        // router.query.kategori = cat;
-        // router.push(router);
         router.push({ pathname: "/", query: { kategori: cat } });
     };
 
     const handleClick = (e) => {
         e.preventDefault();
-        appendQuery(category.id)
-        setToggle(true);
+        appendQuery(category.id);
+        setTab(category.id)
+        // console.log(ref.current.className += ` ${css.category__listItem_active}`);
     }
 
     return (
-        <li className={`${css.category__listItem} ${toggle && css.category__listItem_active}`}>
+        <li ref={ref} className={`${css.category__listItem} ${isActive && css.category__listItem_active}`}>
             <Link href={{
                 pathname: '/',
                 query: { kategori: category.id },
