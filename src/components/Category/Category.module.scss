@@ -6,9 +6,20 @@
     font-size: 1.8rem;
     font-weight: 700;
     padding-bottom: 1rem;
+    transition: all 0.2s;
 
     &_active {
-      border-bottom: 2px solid $color-primary;
+      box-shadow: 0 2px 0 $color-primary;
+      border-bottom: 3px solid transparent;
+
+      @media only screen and (max-width: $bp-small) {
+        padding-bottom: 1.5rem;
+        border-bottom: 3px solid $color-primary;
+      }
+    }
+
+    @media only screen and (max-width: $bp-small) {
+      margin-right: 3rem;
     }
   }
 

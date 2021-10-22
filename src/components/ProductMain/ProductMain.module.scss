@@ -1,28 +1,75 @@
 @import "../../sass/variables";
 
 .productCard {
-  background-color: $color-white;
-  display: flex;
-  justify-content: center;
-  padding: 1rem;
-  border-radius: 8px;
-
-  &__imageWrapper {
-    object-fit: contain;
-    position: relative !important;
-    width: 26rem !important;
-    height: 30rem !important;
+  backface-visibility: hidden;
+  &:link,
+  &:visited {
+    background-color: $color-white;
+    border: 1px solid transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
     border-radius: 8px;
-    overflow: hidden;
+    text-decoration: none;
+    font-family: inherit;
+    transition: all 0.2s;
   }
 
-  &__image {
-    width: 100%;
-    & > div {
-      position: unset !important;
+  &:hover,
+  &:active {
+    border: 1px solid $color-gray-light-3;
+    box-shadow: $shadow-product-box;
+    transform: translateY(-0.2rem) scale(1.01);
+  }
+
+  &__imageWrapper {
+    position: relative;
+    width: 26rem;
+    height: 30rem;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+
+    @media only screen and (max-width: $bp-small) {
+      width: 16.2rem;
+      height: 18.5rem;
     }
   }
 
+  &__image {
+    object-fit: contain;
+    width: 100%;
+    height: auto;
+  }
+
   &__caption {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 2.6rem;
+    line-height: 2.2rem;
+    &_brand {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: $color-primary;
+    }
+
+    &_color {
+      font-weight: 400;
+      font-size: 1.3rem;
+      color: $color-gray-dark-1;
+      &_title {
+        font-weight: 700;
+        font-size: inherit;
+      }
+    }
+  }
+
+  &__price {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: $color-gray-dark-1;
+    align-self: flex-start;
   }
 }

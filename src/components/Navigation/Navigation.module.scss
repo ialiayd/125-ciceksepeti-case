@@ -13,6 +13,14 @@
 
   background-color: $color-white;
 
+  @media only screen and (max-width: $bp-large) {
+    grid-template-columns:
+      [full-start] 2rem
+      [center-start] repeat(8, [col-start] minmax(min-content, 20rem) [col-end])
+      [center-end]
+      2rem [full-end];
+  }
+
   &__inner {
     grid-column: center-start / center-end;
 

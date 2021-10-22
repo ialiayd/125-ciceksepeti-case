@@ -1,10 +1,19 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Category from "../Category/Category"
 import css from "./CategoryList.module.scss"
+import { useRouter } from "next/router"
 
 function CategoryList({ categories }) {
 
     const [activeTab, setActiveTab] = useState("tumu");
+
+    const router = useRouter();
+
+    const { kategori } = router.query;
+
+    useEffect(() => {
+        setActiveTab(!kategori ? "tumu" : kategori);
+    }, [kategori])
 
     return (
         <div className={css.categories}>

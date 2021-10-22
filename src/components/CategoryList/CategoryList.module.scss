@@ -1,12 +1,23 @@
 @import "../../sass/variables";
 
 .categories {
-  margin-top: 3rem;
+  margin-bottom: 3rem;
   width: 100%;
   &__list {
     list-style: none;
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid $color-gray-light-3;
+
+    @media only screen and (max-width: $bp-small) {
+      width: 45rem;
+      overflow-y: scroll;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+    }
   }
 }

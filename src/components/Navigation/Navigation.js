@@ -10,7 +10,7 @@ function Navigation() {
             <div className={syles.navigation__inner}>
                 <div className={syles.navigation__logoBox}>
                     <Link href="/">
-                        <a ><Image src={Logo} alt="İkinci El Project Logo" /></a>
+                        <a title="İkinci El Project"><Image src={Logo} alt="İkinci El Project Logo" /></a>
                     </Link>
                 </div>
                 <NavButtonContainer />

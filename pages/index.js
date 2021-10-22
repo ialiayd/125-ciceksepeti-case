@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
@@ -8,17 +8,11 @@ import Header from '../src/components/Header/Header'
 import Main from '../src/components/MainHOC/Main'
 import ProductList from '../src/components/ProductList/ProductList'
 //COMPONENTS
-
+import { toCapitalize, toCurrencyString } from "../src/utilities/stringOperations"
 import apiEndpoints from '../src/constants/apiEndpoints'
 
 
 export default function Home({ products, categories }) {
-
-  const router = useRouter();
-  const { kategori } = router.query;
-
-  useEffect(() => {
-  }, [kategori])
 
   return (
     <>
@@ -37,17 +31,34 @@ export default function Home({ products, categories }) {
 }
 
 //DONE: Categoriler ve Ürünler serverside Props ile çekilecek
-//TODO: Router ile gelen parametreye göre ürün listesi yükle ve kategori border ı stille
-export async function getServerSideProps(context) {
+//DONE: Router ile gelen parametreye göre ürün listesi yükle
+//TODO: Router'dan yanlış veri gelirse hata sayfasına dön
+export async function getServerSideProps({ query }) {
 
-  const products = await fetch(apiEndpoints.product.allProducts);
-  const categories = await fetch(apiEndpoints.category.allCategories);
+  const category = query.kategori;
 
+  const productData = await fetch(apiEndpoints.product.allProducts);
+  const categoryData = await fetch(apiEndpoints.category.allCategories);
+
+  const productsJson = JSON.parse(JSON.stringify(await productData.json()));
+
+  let products;
+
+  if (typeof category === "undefined" || category === "tumu") {
+    products = productsJson.map(p => {
+      return { id: p.id, brand: toCapitalize(p.brand.title), color: toCapitalize(p.color.title), price: toCurrencyString(p.price), imageUrl: p.imageUrl, categoryId: p.category.id }
+    })
+  }
+  else {
+    products = productsJson.filter(p => p.category.id === category).map(p => {
+      return { id: p.id, brand: toCapitalize(p.brand.title), color: toCapitalize(p.color.title), price: toCurrencyString(p.price), imageUrl: p.imageUrl, categoryId: p.category.id }
+    })
+  }
 
   return {
     props: {
-      products: await products.json(),
-      categories: await categories.json()
+      products: products,
+      categories: await categoryData.json()
     }, // will be passed to the page component as props
   }
 }

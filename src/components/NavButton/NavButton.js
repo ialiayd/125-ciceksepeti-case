@@ -17,3 +17,4 @@ function NavButton({ type }) {
 }
 
 export default NavButton
+//TODO: Make add product button responsive and hide its

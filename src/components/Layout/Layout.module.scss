@@ -1,3 +1,5 @@
+@import "../../sass/variables";
+
 .container {
   display: grid;
   grid-template-rows: 8rem min-content 1fr;
@@ -7,4 +9,12 @@
     [center-start] repeat(8, [col-start] minmax(min-content, 18.5rem) [col-end])
     [center-end]
     minmax(6rem, 1fr) [full-end];
+
+  @media only screen and (max-width: $bp-large) {
+    grid-template-columns:
+      [full-start] 2rem
+      [center-start] repeat(8, [col-start] minmax(min-content, 20rem) [col-end])
+      [center-end]
+      2rem [full-end];
+  }
 }
