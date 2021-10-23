@@ -1,13 +1,11 @@
 import { combineReducers } from 'redux'
 
-import modalReducer from "./modal"
 import accountReducer from "./account"
 
 
 // COMBINED REDUCERS
 const reducers = {
-    account: accountReducer,
-    modalState: modalReducer
+    account: accountReducer
 }
 
 export default combineReducers(reducers)

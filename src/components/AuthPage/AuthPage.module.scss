@@ -1,0 +1,31 @@
+@import "../../sass/variables";
+
+.page {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &__left {
+    height: 100vh;
+    flex: min-content;
+    background-image: url(../../../public/images/ikinci-el-project-login.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+  &__right {
+    flex: 1 1 40rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &_logoBox {
+      position: relative;
+      margin-bottom: 5.563rem;
+    }
+
+    &_logo {
+    }
+  }
+}

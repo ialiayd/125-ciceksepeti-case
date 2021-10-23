@@ -1,11 +1,13 @@
+import React from "react"
 import "../src/sass/main.scss"
-import Layout from "../src/components/Layout/Layout"
 import { Provider } from "react-redux"
 import { useStore } from "../src/store/configureStore"
 
 function MyApp({ Component, pageProps }) {
 
   const store = useStore(pageProps.initialReduxState)
+
+  const Layout = Component.Layout ? Component.Layout : React.Fragment
 
   return (
     <Provider store={store}>

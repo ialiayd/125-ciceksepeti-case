@@ -1,19 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Image from "next/image"
-
 import css from "./ProductDetail.module.scss";
-
-import ProductGivenOffer from "../ProductGivenOffer/ProductGivenOffer"
+import { useSelector } from "react-redux";
 
 import { toCapitalizeEach, toCurrencyString } from '../../utilities/stringOperations';
 
+import ProductGivenOffer from "../ProductGivenOffer/ProductGivenOffer"
+import ButtonGroup from './ButtonGroup/ButtonGroup';
+
+
 function ProductDetail({ product }) {
 
-    console.log(product);
+    const account = useSelector(state => state.account);
+    useEffect(() => {
+        console.log(account);
+    }, [account])
 
     return (
         <section className={css.productDetail}>
-
             <div className={css.productDetail__left}>
                 <div className={css.productDetail__imageWrapper}>
                     <Image
@@ -29,31 +33,35 @@ function ProductDetail({ product }) {
                 <h1 className={css.productDetail__title}>
                     {toCapitalizeEach(product.title)}
                 </h1>
-                <ul className={css.productDetail__specList}>
-                    <li className={css.productDetail__specList_item}>
-                        <span>Marka:</span>
-                        <span>{toCapitalizeEach(product.brand.title)}</span>
-                    </li>
+                <table>
+                    <tbody className={css.productDetail__specs}>
+                        <tr className={css.productDetail__specs_row}>
+                            <td><span>Marka:</span></td>
+                            <td><span>{toCapitalizeEach(product.brand.title)}</span></td>
+                        </tr>
+                        <tr className={css.productDetail__specs_row}>
+                            <td><span>Renk:</span></td>
+                            <td><span>{toCapitalizeEach(product.color.title)}</span></td>
+                        </tr>
+                        <tr className={css.productDetail__specs_row}>
+                            <td><span>Kullanım Durumu:</span></td>
+                            <td><span>{toCapitalizeEach(product.status.title)}</span></td>
+                        </tr>
+                    </tbody>
+                </table>
 
-                    <li className={css.productDetail__specList_item}>
-                        <span>Renk:</span>
-                        <span>{toCapitalizeEach(product.color.title)}</span>
-                    </li>
-
-                    <li className={css.productDetail__specList_item}>
-                        <span>Kullanım Durumu:</span>
-                        <span>{toCapitalizeEach(product.status.title)}</span>
-                    </li>
-                </ul>
                 <div className={css.productDetail__price}>
                     <div itemProp="price">
                         {toCurrencyString(product.price)} TL
                     </div>
                     <ProductGivenOffer offer={product.price} />
                 </div>
-                <div>
-                    <button className="btn btn__primary btn__lg">Satın Al</button>
-                    <button className="btn btn__secondary btn__lg">Teklif Ver</button>
+                <ButtonGroup />
+                <div className={css.productDetail__description}>
+                    <h2 className={css.productDetail__description_title}>Açıklama</h2>
+                    <p className={css.productDetail__description_text}>
+                        {product.description}
+                    </p>
                 </div>
             </div>
 

@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
+import Layout from "../src/components/Layout/Layout"
+
 //COMPONENTS
 import CategoryList from '../src/components/CategoryList/CategoryList'
 import Header from '../src/components/Header/Header'
@@ -29,6 +31,8 @@ export default function Home({ products, categories }) {
     </>
   )
 }
+
+Home.Layout = Layout;
 
 //DONE: Categoriler ve Ürünler serverside Props ile çekilecek
 //DONE: Router ile gelen parametreye göre ürün listesi yükle
