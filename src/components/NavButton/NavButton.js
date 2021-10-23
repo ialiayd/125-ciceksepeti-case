@@ -6,7 +6,7 @@ import css from "./NavButton.module.scss"
 function NavButton({ type }) {
     return (
         <Link href={type.href}>
-            <a className={css.navButton}>
+            <a className={css.navButton} title={type.text} >
                 <Image src={type.src} alt={type.text} className={css.navButton_image} />
                 <span className={css.navButton_text}>
                     {type.text}

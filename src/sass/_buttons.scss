@@ -1,0 +1,46 @@
+.btn {
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  font-weight: 700;
+  font-family: inherit;
+
+  &:not(:last-child) {
+    margin-right: 1rem;
+  }
+  transition: all 0.2s;
+
+  &__lg {
+    font-size: 1.8rem;
+    padding: 0.85rem 7rem;
+  }
+  &__primary {
+    background-color: $color-primary;
+    color: $color-white;
+
+    &:hover {
+      transform: translateY(-0.1rem);
+      box-shadow: 0 0.5rem 1rem rgba($color-primary, 0.8);
+    }
+
+    &:active {
+      transform: translateY(0.2rem);
+      box-shadow: 0 0.2rem 0.5rem rgba($color-primary, 0.8);
+    }
+  }
+
+  &__secondary {
+    background-color: $color-button-bg;
+    color: $color-primary;
+
+    &:hover {
+      transform: translateY(-0.1rem);
+      box-shadow: 0 0.5rem 1rem rgba($color-primary, 0.3);
+    }
+
+    &:active {
+      transform: translateY(0.2rem);
+      box-shadow: 0 0.2rem 0.5rem rgba($color-primary, 0.3);
+    }
+  }
+}

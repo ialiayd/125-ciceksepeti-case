@@ -1,0 +1,17 @@
+@import "../../sass/variables";
+
+.givenOffer {
+  padding: 1rem;
+  padding-right: 1.8rem;
+  background-color: $color-gray-light-1;
+  font-size: 1.5rem;
+  border-radius: 8px;
+  margin-top: 0.5rem;
+  &__title {
+    font-weight: 400;
+    color: $color-gray-dark-3;
+  }
+  &__price {
+    font-weight: 700;
+  }
+}

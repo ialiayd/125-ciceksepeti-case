@@ -3,7 +3,7 @@ import React from 'react'
 import NavButton from "../NavButton/NavButton"
 import types from "../../constants/navButtonTypes"
 
-//TODO: This section is responsible to get the login state and render the buttons due to is current visitor is logged in or not 
+//TODO: This section is responsible to get the login state and render the buttons according to is current visitor is logged in or not 
 /*
 use types constant with the render logic
 */

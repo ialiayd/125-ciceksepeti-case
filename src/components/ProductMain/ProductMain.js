@@ -16,7 +16,7 @@ function ProductCard({ product }) {
     }, [])
 
     return (
-        <Link href={`/urun/${product.id}`}>
+        <Link href={`/product/${product.id}`}>
             <a className={css.productCard} title={`Ürüne git : ${product.brand} ${product.color}`}>
                 <figure>
                     <div className={css.productCard__imageWrapper}>
