@@ -11,10 +11,7 @@ import ButtonGroup from './ButtonGroup/ButtonGroup';
 
 function ProductDetail({ product }) {
 
-    const account = useSelector(state => state.account);
-    useEffect(() => {
-        console.log(account);
-    }, [account])
+    //TODO: kullanıcı giriş yapmış ise state üzerinde yer alan given offers a göre üründe given offer var mı bak
 
     return (
         <section className={css.productDetail}>

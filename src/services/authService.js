@@ -1,15 +1,15 @@
-const getToken = () => {
-    return JSON.parse(localStorage.getItem("sessionToken"));
+export const getToken = () => {
+    return localStorage.getItem("Auth_Token") ? localStorage.getItem("Auth_Token") : false;
 }
 
-const isUserAuthenticated = () => {
+export const isUserAuthenticated = () => {
     const token = getToken();
     return token ? true : false;
 }
 
-const saveToken = (str) => {
+export const saveToken = (str) => {
     try {
-        localStorage.setItem("sessionToken", JSON.stringify(str))
+        localStorage.setItem("Auth_Token", str)
         return true;
     }
     catch {

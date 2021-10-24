@@ -12,8 +12,12 @@ function ProductCard({ product }) {
     const [imageSrc, setImgSrc] = useState(Spinner);
 
     useEffect(() => {
-        setImgSrc(product.imageUrl)
-    }, [])
+        const id = setTimeout(() => {
+            setImgSrc(product.imageUrl)
+            clearTimeout(id)
+        }, 2000);
+
+    }, [imageSrc])
 
     return (
         <Link href={`/product/${product.id}`}>
@@ -24,9 +28,7 @@ function ProductCard({ product }) {
                             alt={`${product.brand} ${product.color}`}
                             className={css.productCard__image}
                             layout="fill"
-                            blurDataURL={imageSrc}
-                            placeholder="blur"
-
+                            unoptimized
                         />
                     </div>
                     <figcaption className={css.productCard__caption}>

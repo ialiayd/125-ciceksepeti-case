@@ -1,0 +1,10 @@
+.invalid {
+  &:focus {
+    border: 1px solid $color-failed !important;
+    background-color: $color-invalid !important;
+  }
+  &:invalid {
+    border: 1px solid $color-failed !important;
+    background-color: $color-invalid !important;
+  }
+}

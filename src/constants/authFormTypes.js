@@ -1,22 +1,24 @@
 const authFormTypes = {
     signup: {
+        endpoint: "signUp",
         title: "Üye Ol",
         text: "Fırsatlardan yararlanmak için üye ol!",
         btnText: "Üye Ol",
         action: {
-            message: "Hesabın var mı?",
+            msg: "Hesabın var mı?",
             cta: "Giriş Yap",
-            action: "/signin"
+            href: "/signin"
         }
     },
     signin: {
+        endpoint: "signIn",
         title: "Giriş Yap",
         text: "Fırsatlardan yararlanmak için giriş yap!",
         btnText: "Giriş",
         action: {
-            message: "Hesabın yok mu?",
+            msg: "Hesabın yok mu?",
             cta: "Üye Ol",
-            action: "/signup"
+            href: "/signup"
         }
     }
 }

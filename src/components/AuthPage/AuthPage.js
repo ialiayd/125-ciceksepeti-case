@@ -13,10 +13,7 @@ function AuthPage() {
 
     const router = useRouter();
 
-    useEffect(() => {
-        const path = router.pathname.substr(1);
-        setFormType(authFormTypes[path])
-    }, [router])
+    const path = router.pathname.substr(1);
 
     return (
         <div className={css.page}>
@@ -32,7 +29,7 @@ function AuthPage() {
                         />
                     </a>
                 </Link>
-                <AuthForm formType={formType} />
+                <AuthForm formType={authFormTypes[path]} />
             </div>
         </div>
     )
