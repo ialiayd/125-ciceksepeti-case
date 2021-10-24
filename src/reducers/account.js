@@ -1,10 +1,7 @@
 import * as types from "../constants/actionTypes"
 
 const accountState = {
-    error: {
-        status: false,
-        message: ""
-    }
+
 }
 
 const accountReducer = (state = accountState, action) => {
@@ -19,13 +16,8 @@ const accountReducer = (state = accountState, action) => {
                 ...state,
                 receivedOffers: action.payload
             }
-        case types.SET_ERROR:
-            return {
-                ...state,
-                error: action.payload
-            }
         default:
-            return accountState;
+            return state;
     }
 }
 

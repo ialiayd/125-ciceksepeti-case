@@ -42,7 +42,7 @@ export const getByAuthAll = async (endpoint, userKey) => {
 }
 
 
-export const getByIdAuth = async (endpoint, errorHandler) => {
+export const getByIdAuth = async (endpoint, userKey) => {
 
 }
 
@@ -59,7 +59,7 @@ export const post = async (url, data) => {
             if (response.status >= 200 && response.status <= 299) {
                 return response.json();
             } else {
-                return [null, response.status];
+                throw Error(response.status);
             }
         })
         .then((jsonResponse) => {
@@ -68,6 +68,7 @@ export const post = async (url, data) => {
             return [data, null]
         }).catch((error) => {
             // Handle the error
+            console.log(error);
             return [null, error]
         });
 }

@@ -1,6 +1,7 @@
 import * as types from "../constants/actionTypes"
 import { getByAuthAll } from "../services/apiService"
 import apiEndpoints from "../constants/apiEndpoints"
+import { setNotification } from "./notification"
 
 export const setGivenOffers = (offers) => (
     {
@@ -17,28 +18,15 @@ export const setReceivedOffers = (offers) => (
 )
 
 
-export const setError = (error) => (
-    {
-        type: types.SET_ERROR,
-        payload: error
-    }
-)
-
-
 export const getGivenOffersFromApi = (userKey) => async (dispatch) => {
 
     const [data, err] = await getByAuthAll(apiEndpoints.account.givenOffers, userKey);
-    if (!!data) {
+    if (data !== null) {
         console.log(data);
         dispatch(setGivenOffers(data));
     }
-    if (!!err) {
-
+    if (err !== null) {
         console.log(err);
-        dispatch(setError({
-            status: true,
-            message: "Sipariş listesi alınamadı."
-        }))
     }
 
 }

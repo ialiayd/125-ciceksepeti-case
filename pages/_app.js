@@ -2,6 +2,7 @@ import React from "react"
 import "../src/sass/main.scss"
 import { Provider } from "react-redux"
 import { useStore } from "../src/store/configureStore"
+import Notification from "../src/components/Notification/Notification"
 
 function MyApp({ Component, pageProps }) {
 
@@ -14,7 +15,7 @@ function MyApp({ Component, pageProps }) {
       <Layout>
         <Component {...pageProps} />
       </Layout>
-
+      <Notification />
     </Provider>
   )
 }
