@@ -14,4 +14,9 @@
   &__price {
     font-weight: 700;
   }
+
+  @media only screen and (max-width: $bp-largest) {
+    margin-left: 2rem;
+    margin-top: 0rem;
+  }
 }

@@ -89,7 +89,7 @@ function AuthForm({ formType }) {
 
                     dispatch(notificationHandler({
                         isOpen: true,
-                        isError: false,
+                        isError: true,
                         message: `${errorMessage}`
                     }))
 

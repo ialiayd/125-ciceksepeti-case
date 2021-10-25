@@ -14,6 +14,14 @@
   flex-direction: column;
   align-items: center;
 
+  @media only screen and (max-width: $bp-large) {
+    max-width: 35.5rem;
+    max-height: auto;
+    height: auto;
+    padding: 0;
+    padding: 3rem 2rem 4rem 2rem;
+  }
+
   &__inner {
     width: 100%;
     margin-top: 5rem;

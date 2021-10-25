@@ -22,6 +22,7 @@ function ProductDetail({ product }) {
                         src={product.imageUrl}
                         alt={toCapitalizeEach(product.title)}
                         layout="fill"
+                        unoptimized={true}
                     />
                 </div>
             </div>
@@ -30,7 +31,7 @@ function ProductDetail({ product }) {
                 <h1 className={css.productDetail__title}>
                     {toCapitalizeEach(product.title)}
                 </h1>
-                <table>
+                <table className={css.productDetail__table}>
                     <tbody className={css.productDetail__specs}>
                         <tr className={css.productDetail__specs_row}>
                             <td><span>Marka:</span></td>

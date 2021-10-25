@@ -1,38 +1,75 @@
 @import "../../sass/variables";
 
 .productDetail {
+  position: relative;
   margin-top: 2rem;
-  padding: 1.5rem 22.5rem 1.5rem 1.5rem;
+  padding: 1.5rem 1.5rem 1.5rem 1.5rem;
   background-color: $color-white;
   min-height: 80vh;
   display: flex;
+  border-radius: 8px;
   justify-content: flex-start;
-  flex-wrap: wrap;
+
+  @media only screen and (max-width: $bp-small) {
+    padding: 0.6rem;
+
+    margin-bottom: 10rem;
+  }
+
+  @media only screen and (max-width: $bp-largest) {
+    flex-direction: column;
+    align-items: center;
+  }
 
   &__left {
     margin-right: 6rem;
+
+    @media only screen and (max-width: $bp-small) {
+      margin-right: 3rem;
+    }
+
+    @media only screen and (max-width: $bp-desktop) {
+      margin-right: 0;
+    }
   }
 
   &__imageWrapper {
     position: relative;
-    border: 1px solid $color-gray-light-1;
-    border-radius: 8px;
-    overflow: hidden;
+    border: 1px solid $color-gray-light-2;
     width: 70rem;
-    height: 73rem;
+    height: 74rem;
+    max-width: 70rem;
+    max-height: 74rem;
+    border-radius: 8px;
+
+    @media only screen and (max-width: $bp-largest) {
+      width: 40rem;
+      height: 44rem;
+      max-width: 40rem;
+      max-height: 44rem;
+    }
   }
 
   &__image {
+    width: 100% !important;
+    height: auto !important;
     object-fit: contain;
   }
 
   &__right {
-    flex: 2;
     padding-top: 3rem;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
+
+    @media only screen and (max-width: $bp-largest) {
+      width: 100%;
+    }
+
+    @media only screen and (max-width: $bp-small) {
+      padding-top: 1rem;
+    }
   }
 
   &__title {
@@ -40,6 +77,16 @@
     font-weight: 400;
     color: $color-gray-dark-4;
     margin-bottom: 2.5rem;
+
+    @media only screen and (max-width: $bp-largest) {
+      width: 100%;
+    }
+
+    @media only screen and (max-width: $bp-small) {
+      font-size: 2.3rem;
+      margin-bottom: 1.3rem;
+      order: 1;
+    }
   }
 
   &__specs {
@@ -57,7 +104,17 @@
       span {
         display: block;
         padding-bottom: 2rem;
+
+        @media only screen and (max-width: $bp-small) {
+          margin-bottom: 1rem;
+        }
       }
+    }
+  }
+
+  &__table {
+    @media only screen and (max-width: $bp-small) {
+      order: 3;
     }
   }
 
@@ -66,6 +123,16 @@
     font-weight: 700;
     color: $color-gray-dark-2;
     margin-bottom: 3rem;
+    @media only screen and (max-width: $bp-largest) {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+    }
+
+    @media only screen and (max-width: $bp-small) {
+      order: 2;
+      margin-bottom: 1.3rem;
+    }
   }
 
   &__description {
@@ -81,6 +148,15 @@
       font-weight: 400;
       font-size: 1.5rem;
       line-height: 2.3rem;
+    }
+
+    @media only screen and (max-width: $bp-largest) {
+      width: 100%;
+    }
+
+    @media only screen and (max-width: $bp-small) {
+      order: 4;
+      margin-top: 0;
     }
   }
 }

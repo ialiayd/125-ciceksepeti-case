@@ -1,0 +1,14 @@
+@import "../../../sass/variables";
+
+.buttonGroup {
+  @media only screen and (max-width: $bp-small) {
+    position: fixed;
+    width: 100%;
+    left: 0;
+    bottom: 1rem;
+    background-color: $color-white;
+    display: flex;
+    justify-content: space-around;
+    padding: 1rem;
+  }
+}
