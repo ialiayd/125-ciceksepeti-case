@@ -1,0 +1,17 @@
+.confirm {
+  text-align: center;
+  &__title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1.2rem;
+  }
+
+  &__text {
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 2rem;
+  }
+
+  &__btn {
+  }
+}

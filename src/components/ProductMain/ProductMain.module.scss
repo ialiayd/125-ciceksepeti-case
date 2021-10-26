@@ -1,26 +1,36 @@
 @import "../../sass/variables";
 
 .productCard {
-  backface-visibility: hidden;
+  &__container {
+    position: relative;
+    justify-self: center;
+    display: flex;
+    align-items: stretch;
+    background-color: $color-white;
+    border-radius: 8px;
+    padding: 1rem;
+    backface-visibility: hidden;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+    overflow: hidden;
+
+    &:hover {
+      border: 1px solid $color-gray-light-2;
+      box-shadow: $shadow-product-box;
+
+      transform: translateY(-0.2rem);
+    }
+  }
+
   &:link,
   &:visited {
-    background-color: $color-white;
+    backface-visibility: hidden;
     border: 1px solid transparent;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 1rem;
-    border-radius: 8px;
     text-decoration: none;
     font-family: inherit;
-    transition: all 0.2s;
-  }
-
-  &:hover,
-  &:active {
-    border: 1px solid $color-gray-light-3;
-    box-shadow: $shadow-product-box;
-    transform: translateY(-0.2rem) scale(1.01);
   }
 
   &__imageWrapper {

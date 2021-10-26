@@ -1,17 +1,34 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from "next/image"
 import css from "./ProductDetail.module.scss";
-import { useSelector } from "react-redux";
 
+import { useSelector } from "react-redux";
 import { toCapitalizeEach, toCurrencyString } from '../../utilities/stringOperations';
 
 import ProductGivenOffer from "../ProductGivenOffer/ProductGivenOffer"
 import ButtonGroup from './ButtonGroup/ButtonGroup';
 
+import placeholder from "../../../public/images/placeholder700.jpg";
 
 function ProductDetail({ product }) {
 
     //TODO: kullanıcı giriş yapmış ise state üzerinde yer alan given offers a göre üründe given offer var mı bak
+    const [clientOffer, setClientOffer] = useState(null);
+
+    const [imageError, setImageError] = useState(false);
+
+    const state = useSelector(state => state.account);
+
+    useEffect(() => {
+        if (state.givenOffers && state.givenOffers.length > 0) {
+            const offer = state.givenOffers.find(p => p.product.id === product.id);
+            offer && setClientOffer(offer);
+        }
+    }, [state])
+
+    const handleImageError = (e) => {
+        setImageError(true);
+    }
 
     return (
         <section className={css.productDetail}>
@@ -19,10 +36,13 @@ function ProductDetail({ product }) {
                 <div className={css.productDetail__imageWrapper}>
                     <Image
                         className={css.productDetail__image}
-                        src={product.imageUrl}
+                        src={
+                            (product.imageUrl === "string" || imageError === true) ? placeholder : product.imageUrl
+                        }
                         alt={toCapitalizeEach(product.title)}
                         layout="fill"
                         unoptimized={true}
+                        onError={handleImageError}
                     />
                 </div>
             </div>
@@ -52,9 +72,13 @@ function ProductDetail({ product }) {
                     <div itemProp="price">
                         {toCurrencyString(product.price)} TL
                     </div>
-                    <ProductGivenOffer offer={product.price} />
+                    {(clientOffer && product.isSold === false) &&
+                        <ProductGivenOffer offer={clientOffer.offeredPrice} />
+                    }
                 </div>
-                <ButtonGroup />
+
+                <ButtonGroup product={product} offered={clientOffer !== null ? true : false} />
+
                 <div className={css.productDetail__description}>
                     <h2 className={css.productDetail__description_title}>Açıklama</h2>
                     <p className={css.productDetail__description_text}>
@@ -62,7 +86,6 @@ function ProductDetail({ product }) {
                     </p>
                 </div>
             </div>
-
         </section >
     )
 }

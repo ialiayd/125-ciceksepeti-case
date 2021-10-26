@@ -10,25 +10,23 @@
   border-radius: 8px;
   justify-content: flex-start;
 
-  @media only screen and (max-width: $bp-small) {
-    padding: 0.6rem;
-
-    margin-bottom: 10rem;
-  }
-
   @media only screen and (max-width: $bp-largest) {
     flex-direction: column;
     align-items: center;
   }
 
+  @media only screen and (max-width: $bp-small) {
+    padding: 0.6rem;
+    margin-bottom: 10rem;
+  }
+
   &__left {
     margin-right: 6rem;
 
-    @media only screen and (max-width: $bp-small) {
-      margin-right: 3rem;
-    }
-
     @media only screen and (max-width: $bp-desktop) {
+      margin-right: 2rem;
+    }
+    @media only screen and (max-width: $bp-small) {
       margin-right: 0;
     }
   }
@@ -92,27 +90,31 @@
   &__specs {
     font-size: 1.5rem;
     color: $color-gray-dark-2;
-    margin-bottom: 3rem;
 
-    td {
-      font-weight: 400;
-      &:first-of-type {
-        font-weight: 700;
-        padding-right: 2rem;
+    tr {
+      td {
+        font-weight: 400;
+        &:first-of-type {
+          font-weight: 700;
+          padding-right: 2rem;
+        }
       }
 
-      span {
-        display: block;
-        padding-bottom: 2rem;
+      &:not(:last-child) {
+        span {
+          display: block;
+          padding-bottom: 2rem;
 
-        @media only screen and (max-width: $bp-small) {
-          margin-bottom: 1rem;
+          @media only screen and (max-width: $bp-small) {
+            margin-bottom: 1rem;
+          }
         }
       }
     }
   }
 
   &__table {
+    margin-bottom: 3rem;
     @media only screen and (max-width: $bp-small) {
       order: 3;
     }

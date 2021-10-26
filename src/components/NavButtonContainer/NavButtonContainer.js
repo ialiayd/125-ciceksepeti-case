@@ -19,14 +19,14 @@ function NavButtonContainer() {
     //TODO: Account içindeki bilgilere göre buradaki butonları render et
     const account = useSelector(state => state.account);
     useEffect(() => {
-        console.log(account);
+        // console.log(account);
     }, [account])
 
     //TODO: State güvenle set edildi diğerleri için de kodları hazırla
     useEffect(() => {
         const token = getToken();
         if (token) {
-            console.log(token);
+            // console.log(token);
             dispatch(getGivenOffersFromApi(token));
         }
     }, [])

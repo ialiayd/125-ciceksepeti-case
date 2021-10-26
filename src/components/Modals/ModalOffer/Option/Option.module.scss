@@ -1,0 +1,45 @@
+@import "../../../../sass/variables";
+
+.option {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  transition: all 0.5s;
+
+  padding: 1.2rem 1rem;
+  width: 100%;
+
+  border: 1px solid $color-gray-light-3;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+
+  &__text {
+    font-size: 1.5rem;
+    line-height: 0;
+  }
+
+  &__active {
+    color: $color-primary;
+    border-color: $color-primary;
+  }
+}
+
+.check {
+  height: 2rem;
+  width: 2rem;
+  background-color: $color-white;
+  border: 1px solid $color-gray-light-3;
+  border-radius: 100px;
+  line-height: 0;
+  background-position: center;
+  transition: all 0.5s;
+  opacity: 0.8;
+  margin-right: 0.5rem;
+
+  &__selected {
+    opacity: 1;
+    background-image: url(../../../../../public/icons/icon-selected.svg);
+  }
+}

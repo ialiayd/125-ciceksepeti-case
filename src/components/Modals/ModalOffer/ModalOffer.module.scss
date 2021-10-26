@@ -1,0 +1,126 @@
+@import "../../../sass/variables";
+
+.modalOffer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 40rem;
+  &__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: $color-gray-dark-2;
+    margin-bottom: 2rem;
+  }
+
+  &__title {
+    font-size: 2.5rem;
+    font-weight: 700;
+  }
+
+  &__close {
+    font-family: sans-serif;
+    font-weight: 400;
+    border: none;
+    outline: none;
+    background: none;
+    font-size: 3.5rem;
+    line-height: 0;
+    color: inherit;
+  }
+
+  &__product {
+    background-color: $color-button-bg;
+    padding: 0.6rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+  }
+
+  &__imageWrapper {
+    position: relative !important;
+    width: 5rem !important;
+    height: 5rem !important;
+    border-radius: 8px;
+    overflow: hidden !important;
+  }
+
+  &__image {
+    width: 5rem !important;
+    height: 5rem !important;
+  }
+
+  &__productText {
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: $color-gray-dark-4;
+    align-self: flex-start;
+    width: 30%;
+    margin-left: 0.7rem;
+    margin-right: auto;
+    margin-top: 0.6rem;
+  }
+
+  &__options {
+    margin-bottom: 2rem;
+  }
+
+  &__price {
+    font-weight: 700;
+    font-size: 1.8rem;
+  }
+
+  &__inputBox {
+    position: relative;
+  }
+
+  &__input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: $color-gray-light-4;
+    padding: 1rem 1.2rem;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+    font-family: inherit;
+    font-size: 1.6rem;
+    color: $color-input-text;
+    &:focus {
+      border: 1px solid $color-primary;
+    }
+    &::placeholder {
+      font-family: inherit;
+      font-size: inherit;
+    }
+  }
+
+  &__inputCurrency {
+    position: absolute;
+    color: $color-input-text;
+    font-size: 1.6rem;
+    line-height: 0;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  &__button {
+    display: block;
+    margin: 0 auto;
+    padding: 1rem 10rem;
+
+    &:disabled {
+      background-color: $color-gray-dark-3;
+
+      &:hover {
+        border: none;
+        box-shadow: none;
+        transform: translateY(0);
+      }
+    }
+  }
+}

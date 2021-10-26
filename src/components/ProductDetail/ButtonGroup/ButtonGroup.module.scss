@@ -11,4 +11,13 @@
     justify-content: space-around;
     padding: 1rem;
   }
+
+  &__deactive {
+    padding: 1rem 2.5rem;
+    background-color: $color-invalid;
+    color: $color-tertiary;
+    font-size: 1.8rem;
+    font-weight: 700;
+    border-radius: 8px;
+  }
 }

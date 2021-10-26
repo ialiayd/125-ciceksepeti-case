@@ -23,6 +23,19 @@
     }
   }
 
+  &__md {
+    font-size: 1.8rem;
+    padding: 1rem 4rem;
+
+    @media only screen and (max-width: $bp-desktop) {
+      padding: 0.85rem 3rem;
+    }
+
+    @media only screen and (max-width: $bp-small) {
+      padding: 0.85rem 6rem;
+    }
+  }
+
   &__primary {
     background-color: $color-primary;
     color: $color-white;

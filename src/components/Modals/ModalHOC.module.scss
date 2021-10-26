@@ -1,0 +1,90 @@
+@import "../../sass/variables";
+
+.modal {
+  // display: flex;
+  // opacity: 1;
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+
+  overflow: auto; /* Enable scroll if needed */
+  background-color: $color-primary; /* Fallback color */
+  background-color: rgba($color-primary, 0.7); /* Black w/ opacity */
+
+  padding-bottom: 20rem;
+
+  justify-content: center;
+  align-items: center;
+
+  &__active {
+    opacity: 1;
+    display: flex;
+    animation: fadeIn 0.2s ease-in;
+  }
+
+  &__passive {
+    animation: fadeOut 0.2s ease-in;
+    opacity: 0;
+    display: none;
+  }
+
+  &__content {
+    opacity: 0;
+    background-color: $color-white;
+    padding: 2rem;
+    border-radius: 8px;
+    z-index: 2; /* Sit on top */
+    animation: slideIn 0.2s ease-in;
+    animation-fill-mode: forwards;
+
+    transform: translateY(-10rem);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+
+    display: none;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    display: flex;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    display: flex;
+  }
+
+  50% {
+    opacity: 0.8;
+  }
+
+  50% {
+    opacity: 0.1;
+  }
+
+  100% {
+    display: none;
+  }
+}
+
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-10rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
