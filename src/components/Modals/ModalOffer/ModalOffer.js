@@ -1,10 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import css from "./ModalOffer.module.scss";
-
 import Image from "next/image"
 
 import Option from './Option/Option';
+
 import { toCurrencyString } from "../../../utilities/stringOperations";
+import apiEndpoints from '../../../constants/apiEndpoints';
+import { getToken, isUserAuthenticated } from '../../../services/authService';
+import { postByAuth } from '../../../services/apiService';
+
+import { useRouter } from 'next/router';
+import { useDispatch, useSelector } from 'react-redux';
+import { getGivenOffersFromApi } from "../../../actions/account"
+import { notificationHandler } from "../../../actions/notification";
 
 function ModalOffer({ product, handleClose }) {
 
@@ -12,6 +20,10 @@ function ModalOffer({ product, handleClose }) {
     const [activeRate, setActiveRate] = useState(0);
     const [offerPrice, setOfferPrice] = useState(0);
     const [buttonDisabled, setButtonDisabled] = useState(true);
+
+    const router = useRouter();
+    const state = useSelector(state => state.account);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         console.log(inputValue);
@@ -46,10 +58,79 @@ function ModalOffer({ product, handleClose }) {
 
     const handleOffer = () => {
         //api ye product id, user key ve offer fiyatını gönder
-        if (activeRate !== 0 || offerPrice > 0) {
-            activeRate !== 0 ? console.log(Math.round((product.price / activeRate) * 100))
-                : console.log(Math.round(offerPrice))
+        if (isUserAuthenticated()) {
+
+            const token = getToken();
+            let offeredPrice;
+            if (activeRate !== 0) {
+                offeredPrice = Math.round((product.price / 100) * activeRate);
+            }
+
+            else if (offerPrice > 0) {
+                offeredPrice = Math.round(offerPrice)
+            }
+
+            if (offeredPrice > 0) {
+                postByAuth(`${apiEndpoints.product.offerProduct}${product.id}`, token, { offeredPrice })
+                    .then(resp => {
+                        if (resp[0] !== null) {
+                            dispatch(getGivenOffersFromApi(token));
+                            setUnOfferable(true)
+                            dispatch(notificationHandler({
+                                isOpen: true,
+                                isError: false,
+                                message: "Ürün teklifi başarıyla yapıldı."
+                            }));
+                        }
+                        else {
+                            const err = resp[1].toString().split(' ')[1];
+
+                            let errorMessage = "";
+
+                            if (err === "401") {
+                                errorMessage = "Teklif yapmak için giriş yapınız";
+                            }
+
+                            else if (err === "400") {
+                                errorMessage = "Bu ürüne teklif veremezsiniz.";
+                            }
+
+                            else if (err === "404") {
+                                errorMessage = "Ürün teklif edilebilir bulunamadı.";
+                            }
+                            else {
+                                errorMessage = "Bir hata oluştu. Daha sonra tekrar deneyin.";
+                            }
+
+                            dispatch(notificationHandler({
+                                isOpen: true,
+                                isError: true,
+                                message: `${errorMessage}`
+                            }))
+
+                            handleClose();
+                        }
+                    })
+                    .catch(err => dispatch(notificationHandler({
+                        isOpen: true,
+                        isError: true,
+                        message: `${err}`
+                    })));
+            }
+            handleClose();
         }
+
+        else {
+            router.push({
+                pathname: "/signin",
+                query: {
+                    from: router.pathname
+                }
+            });
+        }
+
+
+
     }
 
     return (

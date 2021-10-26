@@ -6,22 +6,39 @@ import ModalHOC from '../../Modals/ModalHOC';
 import ModalConfirm from '../../Modals/ModalConfirm/ModalConfirm';
 import ModalOffer from '../../Modals/ModalOffer/ModalOffer';
 
-function ButtonGroup({ product, offered }) {
+import { putByAuthUrl } from "../../../services/apiService";
+import { isUserAuthenticated, getToken } from "../../../services/authService";
+import { useRouter } from 'next/router';
+import apiEndpoints from '../../../constants/apiEndpoints';
+import { useDispatch } from 'react-redux';
+import { notificationHandler } from '../../../actions/notification';
+
+
+function ButtonGroup({ product, clientOffer }) {
 
     const [isOffer, setIsOffer] = useState(false);
     const [isPurchase, setIsPurchase] = useState(false);
+    const [isOfferedProduct, setIsOfferedProduct] = useState(false);
+    const [isSold, setIsSold] = useState(false);
+
+    const router = useRouter();
+    const dispatch = useDispatch();
 
     //TODO: ÜRÜN EKLEYİP BURAYI DEBUG ET
 
     useEffect(() => {
-        // console.log(product);
+        (clientOffer !== null) && setIsOfferedProduct(true);
+    }, [clientOffer])
+
+    useEffect(() => {
+        setIsSold(product.isSold);
     }, [])
 
-    const handlePurchase = (e) => {
+    const showPurchaseModal = (e) => {
         setIsPurchase(true);
     }
 
-    const handleOffer = (e) => {
+    const showOfferModal = (e) => {
         setIsOffer(true);
     }
 
@@ -29,25 +46,77 @@ function ButtonGroup({ product, offered }) {
         setIsOffer(false);
     }
 
-    const handleRejectOffer = (e) => {
-        console.log("Reject Offer");
-    }
-
     const cancelPurchase = () => {
-        console.log("Cancel");
         setIsPurchase(false);
     }
 
     const purchaseProduct = () => {
-        console.log("Purchased");
-        setIsPurchase(false);
-    }
 
+        if (isUserAuthenticated()) {
+            const token = getToken();
+            const productId = product.id;
+
+            putByAuthUrl(`${apiEndpoints.product.purchaseProduct}${productId}`, token)
+                .then(response => {
+                    setIsPurchase(false);
+                    setIsSold(true);
+                    (response[0] || response[1] === null) && dispatch(notificationHandler({
+                        isOpen: true,
+                        isError: false,
+                        message: "Satın alındı."
+                    }));
+
+                    if (response[1] !== null) {
+                        console.log(response[1]);
+                        const err = response[1].toString().split(' ')[1];
+                        let errorMessage = "";
+
+
+                        if (err === "401") {
+                            errorMessage = "Satın almak için giriş yapınız.";
+                        }
+
+                        else if (err === "400") {
+                            errorMessage = "Kendi ürününüzü satın alamazsınız.";
+                        }
+
+                        else if (err === "404") {
+                            errorMessage = "Ürün satın alınamaz.";
+                        }
+
+                        dispatch(notificationHandler({
+                            isOpen: true,
+                            isError: true,
+                            message: `${errorMessage}`
+                        }))
+
+                    }
+                })
+                .catch(err => {
+                    dispatch(notificationHandler({
+                        isOpen: true,
+                        isError: true,
+                        message: `${err}`
+                    }))
+                    setIsPurchase(false);
+                })
+
+        }
+        else {
+            setIsPurchase(false);
+            router.push({
+                url: "/signin",
+
+            })
+        }
+
+
+    }
 
     return (
         <>
             {
-                (product.isSold)
+                (isSold)
                     ?
                     <>
                         <div className={css.buttonGroup__deactive}>
@@ -58,18 +127,18 @@ function ButtonGroup({ product, offered }) {
                         <div className={css.buttonGroup}>
                             <div>
                                 {
-                                    product.isSold === false &&
+                                    isSold === false &&
                                     <button
                                         className="btn btn__primary btn__lg"
-                                        onClick={handlePurchase}>
+                                        onClick={showPurchaseModal}>
                                         Satın Al</button>
                                 }
                                 {
                                     product.isOfferable &&
                                     <button
                                         className="btn btn__secondary btn__lg"
-                                        onClick={offered ? handleRejectOffer : handleOffer}>
-                                        {offered ? "Teklifi Geri Çek" : "Teklif Ver"}
+                                        onClick={isOfferedProduct ? () => { } : showOfferModal}>
+                                        {isOfferedProduct ? "Teklifi Geri Çek" : "Teklif Ver"}
                                     </button>
                                 }
                             </div>
@@ -81,7 +150,7 @@ function ButtonGroup({ product, offered }) {
 
             {<ModalHOC display={(isOffer || isPurchase)}>
                 {
-                    isOffer && <ModalOffer product={product} handleClose={closeOfferModal} />
+                    isOffer && <ModalOffer product={product} handleClose={closeOfferModal} setUnOfferable={setIsOfferedProduct} />
                 }
 
                 {

@@ -46,8 +46,9 @@ export const getByIdAuth = async (endpoint, userKey) => {
 
 }
 
-export const post = async (url, data) => {
-    return await fetch(url, {
+export const post = async (endpoint, data) => {
+
+    return await fetch(endpoint, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -71,14 +72,67 @@ export const post = async (url, data) => {
             console.log(error);
             return [null, error]
         });
+
 }
 
-export const postByAuth = async (data, token) => {
-
+export const postByAuth = async (endpoint, token, data) => {
+    return fetch(endpoint, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        },
+        body: JSON.stringify(data)
+    })
+        .then((response) => {
+            if (response.status >= 200 && response.status <= 299) {
+                return response.json();
+            } else {
+                throw Error(response.status);
+            }
+        })
+        .then((jsonResponse) => {
+            // do whatever you want with the JSON response
+            const data = jsonResponse;
+            return [data, null]
+        }).catch((error) => {
+            // Handle the error
+            console.log(error);
+            return [null, error]
+        });
 }
 
 export const put = async (data, token) => {
 
+}
+
+export const putByAuthUrl = async (endpoint, token) => {
+    return fetch(endpoint, {
+        method: 'PUT',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            "Access-Control-Allow-Origin": "*",
+            'Authorization': 'Bearer ' + token
+        }
+    })
+        .then((response) => {
+            if (response.status >= 200 && response.status <= 299) {
+                return ["ok", null];
+            } else {
+                throw Error(response.status);
+            }
+        })
+        .then(data => {
+            // do whatever you want with the JSON response
+
+            return data;
+        }).catch((error) => {
+            // Handle the error
+            console.log(error);
+            return [null, error]
+        });
 }
 
 export const deleteData = async (data, token) => {

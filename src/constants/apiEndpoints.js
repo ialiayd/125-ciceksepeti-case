@@ -20,7 +20,7 @@ const apiEndpoints = {
         productById: `${url}/product/`,
         createProduct: `${url}/product/create`,
         offerProduct: `${url}/product/offer/`,
-        purchaseProduct: `${url}/product/offer/`,
+        purchaseProduct: `${url}/product/purchase/`,
     },
     account: {
         givenOffers: `${url}/account/given-offers`,

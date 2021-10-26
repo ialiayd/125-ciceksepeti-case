@@ -19,9 +19,13 @@ function ProductDetail({ product }) {
 
     const state = useSelector(state => state.account);
 
+
     useEffect(() => {
         if (state.givenOffers && state.givenOffers.length > 0) {
-            const offer = state.givenOffers.find(p => p.product.id === product.id);
+            //Get the last offer
+            let offers = state.givenOffers.filter(o => o.product.id === product.id);
+            let offer = offers.length > 1 ? [offers.length - 1] : offers[0];
+            console.log(offer);
             offer && setClientOffer(offer);
         }
     }, [state])
@@ -77,7 +81,7 @@ function ProductDetail({ product }) {
                     }
                 </div>
 
-                <ButtonGroup product={product} offered={clientOffer !== null ? true : false} />
+                <ButtonGroup product={product} clientOffer={clientOffer} />
 
                 <div className={css.productDetail__description}>
                     <h2 className={css.productDetail__description_title}>Açıklama</h2>
