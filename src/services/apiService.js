@@ -2,14 +2,13 @@ export const getAllPublic = async (endpoint, errorHandler) => {
 
 }
 
-export const getByIdPublic = async (endpoint, errorHandler) => {
+export const getByIdPublic = async (endpoint) => {
 
     try {
         const response = await fetch(endpoint);
         return response.json();
 
     } catch (error) {
-        errorHandler(error);
     }
 
 }
@@ -103,6 +102,32 @@ export const postByAuth = async (endpoint, token, data) => {
         });
 }
 
+export const postByAuthUrl = async (endpoint, token) => {
+    return fetch(endpoint, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        }
+    })
+        .then((response) => {
+            if (response.status >= 200 && response.status <= 299) {
+                return ["ok", null]
+            } else {
+                throw Error(response.status);
+            }
+        })
+        .then((data) => {
+            // do whatever you want with the JSON response
+            return data
+        }).catch((error) => {
+            // Handle the error
+            console.log(error);
+            return [null, error]
+        });
+}
+
 export const put = async (data, token) => {
 
 }
@@ -129,6 +154,30 @@ export const putByAuthUrl = async (endpoint, token) => {
 
             return data;
         }).catch((error) => {
+            // Handle the error
+            console.log(error);
+            return [null, error]
+        });
+}
+
+export const deleteByUrlAuth = async (endpoint, token) => {
+    return fetch(endpoint, {
+        method: 'DELETE',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            "Access-Control-Allow-Origin": "*",
+            'Authorization': 'Bearer ' + token
+        }
+    })
+        .then((response) => {
+            if (response.status >= 200 && response.status <= 299) {
+                return ["ok", null];
+            } else {
+                throw Error(response.status);
+            }
+        })
+        .catch((error) => {
             // Handle the error
             console.log(error);
             return [null, error]

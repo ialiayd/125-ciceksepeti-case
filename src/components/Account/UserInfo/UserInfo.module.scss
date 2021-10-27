@@ -1,0 +1,18 @@
+@import "../../../sass/variables";
+
+.user {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  &__avatarBox {
+    position: relative;
+    width: 3.8rem;
+    height: 3.8rem;
+    margin-right: 1rem;
+  }
+  &__mail {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $color-gray-dark-2;
+  }
+}

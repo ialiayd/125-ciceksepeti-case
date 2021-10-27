@@ -1,0 +1,46 @@
+@import "../../../sass/variables";
+
+.tab {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border-bottom: 1px solid #eee;
+  padding-top: 2rem;
+  background-color: #fff;
+  &__container {
+    padding: 0 3rem;
+  }
+
+  &__btn {
+    border: none;
+    border-bottom: 0.125rem solid transparent;
+    background: none;
+    outline: none;
+    box-shadow: 0 2px 0 transparent;
+    padding-bottom: 1rem;
+    color: $color-gray-dark-3;
+    font-size: 1.5rem;
+    font-weight: 400;
+    font-family: inherit;
+
+    transition: all 0.3s;
+
+    &:not(:last-child) {
+      margin-right: 3.4rem;
+    }
+
+    &__active {
+      color: $color-primary;
+      border-bottom: 0.125rem solid $color-primary;
+      box-shadow: 0 2px 0 $color-primary;
+    }
+  }
+}
+
+.offers {
+  background-color: #fff;
+  padding: 1.6rem 3rem;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  min-height: 55vh;
+  transition: all 0.3s;
+}

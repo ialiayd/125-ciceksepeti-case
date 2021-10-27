@@ -3,6 +3,7 @@ import React from 'react'
 import AuthPage from '../../src/components/AuthPage/AuthPage'
 
 function Signin() {
+
     return (
         <AuthPage />
     )

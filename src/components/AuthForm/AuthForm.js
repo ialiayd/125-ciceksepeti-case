@@ -9,7 +9,7 @@ import { validateEmail, validateStringLenghtByRange, removeEmptySpaces } from ".
 import apiEndpoints from '../../constants/apiEndpoints'
 import { post } from '../../services/apiService'
 import { saveToken, getToken } from "../../services/authService";
-import router from 'next/router'
+import { useRouter } from 'next/router'
 
 
 import { notificationHandler } from "../../actions/notification"
@@ -17,7 +17,7 @@ import { notificationHandler } from "../../actions/notification"
 function AuthForm({ formType }) {
 
     const dispatch = useDispatch();
-
+    const router = useRouter();
     let { title, text, btnText, action, endpoint } = formType;
 
     const [email, setEmail] = useState("");
@@ -28,8 +28,12 @@ function AuthForm({ formType }) {
 
     const [disabled, setDisabled] = useState(false);
 
+    const forwardPage = router.query.page ? decodeURIComponent(router.query.page) : null;
+    const forwardPageId = router.query.pid ? decodeURIComponent(router.query.pid) : null;
 
-
+    let forwardPageUrl = "";
+    forwardPage !== null && (forwardPageUrl += `${forwardPage}`)
+    forwardPageId !== null && (forwardPageUrl += `/${forwardPageId}`);
 
     useEffect(() => {
         !validateEmail(email) ? setEmailValidation(false) : setEmailValidation(true)
@@ -67,7 +71,7 @@ function AuthForm({ formType }) {
             }).then(response => {
                 if (response[0]) {
                     saveToken(response[0]["access_token"]);
-                    router.push("/");
+                    router.push(forwardPageUrl !== "" ? forwardPageUrl : "/");
                 }
 
                 else if (response[1]) {

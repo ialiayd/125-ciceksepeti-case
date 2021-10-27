@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Image from "next/image"
 import css from "./ProductDetail.module.scss";
-
 import { useSelector } from "react-redux";
 import { toCapitalizeEach, toCurrencyString } from '../../utilities/stringOperations';
 
@@ -9,6 +8,7 @@ import ProductGivenOffer from "../ProductGivenOffer/ProductGivenOffer"
 import ButtonGroup from './ButtonGroup/ButtonGroup';
 
 import placeholder from "../../../public/images/placeholder700.jpg";
+import { useRouter } from 'next/router';
 
 function ProductDetail({ product }) {
 
@@ -19,13 +19,15 @@ function ProductDetail({ product }) {
 
     const state = useSelector(state => state.account);
 
+    const router = useRouter();
+
+    !product && router.push("/404");
 
     useEffect(() => {
         if (state.givenOffers && state.givenOffers.length > 0) {
             //Get the last offer
-            let offers = state.givenOffers.filter(o => o.product.id === product.id);
+            let offers = state.givenOffers.filter(o => o.product.id === product.id && o.status !== "rejected");
             let offer = offers.length > 1 ? [offers.length - 1] : offers[0];
-            console.log(offer);
             offer && setClientOffer(offer);
         }
     }, [state])

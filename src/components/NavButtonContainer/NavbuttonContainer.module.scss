@@ -1,0 +1,27 @@
+@import "../../sass/variables";
+
+@keyframes loading {
+  0% {
+    opacity: 0.8;
+    background-position: 0% 100%;
+  }
+  50% {
+    background-position: 100% 51%;
+  }
+  100% {
+    opacity: 1;
+    background-position: 0% 50%;
+  }
+}
+
+.loading {
+  opacity: 1;
+  animation: loading 2s ease;
+  animation-iteration-count: infinite;
+  width: 30rem;
+  height: 5rem;
+  border-radius: 8px;
+  transition: all 0.2s;
+  background-size: 400% 400%;
+  background: linear-gradient(180deg, $color-button-bg-dark, $color-button-bg);
+}

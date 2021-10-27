@@ -1,7 +1,8 @@
 import * as types from "../constants/actionTypes"
 
 const accountState = {
-
+    receivedOffers: [],
+    givenOffers: []
 }
 
 const accountReducer = (state = accountState, action) => {

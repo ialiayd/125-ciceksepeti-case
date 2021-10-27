@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import apiEndpoints from "../../src/constants/apiEndpoints"
 import { getByIdPublic } from "../../src/services/apiService"
 import { useRouter } from "next/router";
@@ -12,7 +12,7 @@ function ProductPage({ product }) {
 
     const router = useRouter();
 
-    !product.id && router.push("/404");
+    !product && router.push("/404");
 
     return (
         <Main>
@@ -25,11 +25,8 @@ ProductPage.Layout = Layout;
 
 export default ProductPage
 
-export const getServerSideProps = async ({ query }) => {
+export const getServerSideProps = async ({ query, req }) => {
 
-    const log = (e) => {
-        console.log(e);
-    }
 
     const productId = query.id;
 
@@ -37,15 +34,15 @@ export const getServerSideProps = async ({ query }) => {
 
     if (productId) {
         const endpoint = apiEndpoints.product.productById + query.id;
-        const res = await getByIdPublic(endpoint, log);
-        product = res
-    }
-    else {
-        product = null;
+        const res = await getByIdPublic(endpoint);
+        product = res ? res : null;
     }
 
-
-
+    if (!product) {
+        return {
+            notFound: true,
+        }
+    }
 
     return {
         props: {

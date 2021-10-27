@@ -19,7 +19,7 @@ function ProductCard({ product }) {
     return (
         <div className={css.productCard__container}>
             <Link
-                href={`/product/id`} as={`/product/${product.id}`}
+                href={`/product/${product.id}`} as={`/product/${product.id}`}
             >
                 <a className={css.productCard} title={`Ürüne git : ${product.brand} ${product.color}`}>
                     <figure>

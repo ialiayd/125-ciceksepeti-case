@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getGivenOffersFromApi } from "../../../actions/account"
 import { notificationHandler } from "../../../actions/notification";
 
-function ModalOffer({ product, handleClose }) {
+function ModalOffer({ product, handleClose, setUnOfferable }) {
 
     const [inputValue, setInputValue] = useState("");
     const [activeRate, setActiveRate] = useState(0);
@@ -26,7 +26,6 @@ function ModalOffer({ product, handleClose }) {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        console.log(inputValue);
         setOfferPrice(Number(inputValue));
         inputValue.length === 0 && setButtonDisabled(true);
     }, [inputValue]);
@@ -122,10 +121,12 @@ function ModalOffer({ product, handleClose }) {
 
         else {
             router.push({
-                pathname: "/signin",
+                pathname: '/signin',
                 query: {
-                    from: router.pathname
-                }
+                    ...router.query,
+                    page: "/product",
+                    pid: product.id
+                },
             });
         }
 

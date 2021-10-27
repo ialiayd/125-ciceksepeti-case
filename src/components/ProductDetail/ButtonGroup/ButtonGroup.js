@@ -6,12 +6,14 @@ import ModalHOC from '../../Modals/ModalHOC';
 import ModalConfirm from '../../Modals/ModalConfirm/ModalConfirm';
 import ModalOffer from '../../Modals/ModalOffer/ModalOffer';
 
-import { putByAuthUrl } from "../../../services/apiService";
+import { deleteByUrlAuth, putByAuthUrl } from "../../../services/apiService";
 import { isUserAuthenticated, getToken } from "../../../services/authService";
 import { useRouter } from 'next/router';
 import apiEndpoints from '../../../constants/apiEndpoints';
 import { useDispatch } from 'react-redux';
 import { notificationHandler } from '../../../actions/notification';
+import { useSelector } from 'react-redux';
+import { setGivenOffers } from '../../../actions/account';
 
 
 function ButtonGroup({ product, clientOffer }) {
@@ -23,11 +25,12 @@ function ButtonGroup({ product, clientOffer }) {
 
     const router = useRouter();
     const dispatch = useDispatch();
-
+    const state = useSelector(state => state.account);
     //TODO: ÜRÜN EKLEYİP BURAYI DEBUG ET
 
     useEffect(() => {
         (clientOffer !== null) && setIsOfferedProduct(true);
+        clientOffer && console.log(clientOffer);
     }, [clientOffer])
 
     useEffect(() => {
@@ -35,15 +38,94 @@ function ButtonGroup({ product, clientOffer }) {
     }, [])
 
     const showPurchaseModal = (e) => {
-        setIsPurchase(true);
+        if (isUserAuthenticated()) {
+            setIsPurchase(true);
+        }
+        else {
+            router.push({
+                pathname: '/signin',
+                query: {
+                    ...router.query,
+                    page: "/product",
+                    pid: product.id
+                },
+            });
+        }
     }
 
     const showOfferModal = (e) => {
-        setIsOffer(true);
+        if (isUserAuthenticated()) {
+            setIsOffer(true);
+        }
+        else {
+            router.push({
+                pathname: '/signin',
+                query: {
+                    ...router.query,
+                    page: "/product",
+                    pid: product.id
+                },
+            });
+        }
     }
 
     const closeOfferModal = () => {
         setIsOffer(false);
+    }
+
+    const cancelOffer = () => {
+        if (isUserAuthenticated()) {
+
+            const token = getToken();
+            const offerId = clientOffer.id;
+
+            deleteByUrlAuth(`${apiEndpoints.account.cancelOffer}${offerId}`, token)
+                .then(response => {
+                    setIsOfferedProduct(false);
+                    (response[0] || response[1] === null) && dispatch(notificationHandler({
+                        isOpen: true,
+                        isError: false,
+                        message: "Teklif Geri Çekildi."
+                    }));
+                    dispatch(
+                        setGivenOffers(
+                            state.givenOffers.filter(x => x.id !== offerId))
+                    );
+
+                    if (response[1] !== null) {
+                        const err = response[1].toString().split(' ')[1];
+                        let errorMessage = "";
+
+
+                        if (err === "401") {
+                            errorMessage = "Teklif Geri Çekilemez.";
+                        }
+
+                        else if (err === "400") {
+                            errorMessage = "Teklif bulunamadı.";
+                        }
+
+                        else if (err === "404") {
+                            errorMessage = "Teklif Bulunamadı.";
+                        }
+
+                        dispatch(notificationHandler({
+                            isOpen: true,
+                            isError: true,
+                            message: `${errorMessage}`
+                        }))
+
+                    }
+                })
+                .catch(err => {
+                    dispatch(notificationHandler({
+                        isOpen: true,
+                        isError: true,
+                        message: `${err}`
+                    }))
+                })
+
+        }
     }
 
     const cancelPurchase = () => {
@@ -67,7 +149,6 @@ function ButtonGroup({ product, clientOffer }) {
                     }));
 
                     if (response[1] !== null) {
-                        console.log(response[1]);
                         const err = response[1].toString().split(' ')[1];
                         let errorMessage = "";
 
@@ -105,9 +186,13 @@ function ButtonGroup({ product, clientOffer }) {
         else {
             setIsPurchase(false);
             router.push({
-                url: "/signin",
-
-            })
+                pathname: '/signin',
+                query: {
+                    ...router.query,
+                    page: "/product",
+                    pid: product.id
+                },
+            });
         }
 
 
@@ -137,7 +222,7 @@ function ButtonGroup({ product, clientOffer }) {
                                     product.isOfferable &&
                                     <button
                                         className="btn btn__secondary btn__lg"
-                                        onClick={isOfferedProduct ? () => { } : showOfferModal}>
+                                        onClick={isOfferedProduct ? cancelOffer : showOfferModal}>
                                         {isOfferedProduct ? "Teklifi Geri Çek" : "Teklif Ver"}
                                     </button>
                                 }

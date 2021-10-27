@@ -17,7 +17,11 @@ const types = {
     login: {
         src: iconProfile,
         text: "Giriş Yap",
-        href: "/login"
+        href: "/signin"
+    },
+    logout: {
+        src: iconProfile,
+        text: "Giriş Yap"
     }
 }
 

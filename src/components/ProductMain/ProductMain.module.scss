@@ -24,6 +24,7 @@
 
   &:link,
   &:visited {
+    position: relative;
     backface-visibility: hidden;
     border: 1px solid transparent;
     display: flex;
@@ -48,6 +49,7 @@
   }
 
   &__image {
+    position: relative;
     object-fit: contain;
     width: 100%;
     height: auto;
