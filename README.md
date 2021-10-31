@@ -20,7 +20,7 @@ At first, run the script below,
 npm run build
 ```
 
-Then run the script below and see the build result on your browser while opening [http://localhost:3000](http://localhost:3000),
+Then run the script below and see the build result on your browser by opening [http://localhost:3000](http://localhost:3000),
 
 ```bash
 npm run start
